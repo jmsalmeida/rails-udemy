@@ -1,0 +1,14 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+Vagrant.configure("2") do |config|
+  config.vm.provider "virtualbox"
+  config.vm.box = "jmsalmeida/rails-dev"
+
+  config.vm.network :forwarded_port, guest: 3000, host: 8080 # rails
+  config.vm.network :forwarded_port, guest: 80, host: 8880 # wordpress
+  config.vm.network :forwarded_port, guest: 3307, host: 8007 # wordpress
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]
+  end
+end
